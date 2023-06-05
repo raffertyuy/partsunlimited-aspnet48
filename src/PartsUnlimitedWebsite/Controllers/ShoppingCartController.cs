@@ -31,8 +31,6 @@ namespace PartsUnlimited.Controllers
 
         public ActionResult Index()
         {
-            throw new SystemException("This is a test exception, fix me!");
-
             var cart = ShoppingCart.GetCart(db, HttpContext);
             var items = cart.GetCartItems();
 			var itemsCount = items.Sum(x => x.Count);
