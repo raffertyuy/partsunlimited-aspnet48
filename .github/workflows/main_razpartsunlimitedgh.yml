@@ -26,7 +26,14 @@ jobs:
         run: nuget restore
 
       - name: Publish to folder
-        run: msbuild PartsUnlimited.sln /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+        run: msbuild src\PartsUnlimitedWebsite\PartsUnlimitedWebsite.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\" /p:Configuration=Debug
+
+      - name: Run Unit Tests
+        uses: microsoft/vstest-action@v1.0.0
+        with:
+          testAssembly: PartsUnlimited.UnitTests.dll
+          searchFolder: .\test\PartsUnlimited.UnitTests\bin\Debug\
+          runInParallel: true
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
