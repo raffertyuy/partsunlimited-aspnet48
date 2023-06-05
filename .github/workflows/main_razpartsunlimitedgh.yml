@@ -53,5 +53,5 @@ jobs:
         with:
           app-name: 'razpartsunlimitedgh'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_34B14E92D9854CCB84D0CB4F61664CA0 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
