@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2019
 
     steps:
       - uses: actions/checkout@v2
@@ -26,16 +26,16 @@ jobs:
         run: nuget restore
 
       - name: Publish to folder
-        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+        run: msbuild src\PartsUnlimitedWebsite\PartsUnlimitedWebsite.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: ASP-app
+          name: ASPNET-app
           path: '/published/**'
 
   deploy:
-    runs-on: windows-latest
+    runs-on: windows-2019
     needs: build
     environment:
       name: 'Production'
@@ -45,7 +45,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: ASP-app
+          name: ASPNET-app
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
